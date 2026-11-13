@@ -1,0 +1,393 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bakery-50: #fdf8f3;
+  --color-bakery-100: #faf0e6;
+  --color-bakery-200: #f3dcc9;
+  --color-bakery-300: #e8c0a0;
+  --color-bakery-400: #d99d70;
+  --color-bakery-500: #c87d4a;
+  --color-bakery-600: #b06338;
+  --color-bakery-700: #8e4e2d;
+  --color-bakery-800: #734029;
+  --color-bakery-900: #5f3524;
+  --color-bakery-950: #321910;
+
+  --color-cream-50: #fefefc;
+  --color-cream-100: #fdfcf7;
+  --color-cream-200: #fbf7eb;
+  --color-cream-300: #f7f0d8;
+  --color-cream-400: #f1e6b8;
+  --color-cream-500: #ead790;
+  --color-cream-600: #e0c46a;
+  --color-cream-700: #c9a84e;
+  --color-cream-800: #a3853e;
+  --color-cream-900: #846c34;
+
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-display: Inter, system-ui, sans-serif;
+
+  --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.08), 0 1px 3px -1px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-bakery-200);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream-50);
+    color: var(--color-bakery-900);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-cream-50), 0 0 0 4px var(--color-bakery-500);
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+  }
+
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-cream-50), 0 0 0 4px var(--color-bakery-500);
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    background-color: var(--color-bakery-600);
+    color: white;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-bakery-700);
+  }
+
+  .btn-primary:active {
+    background-color: var(--color-bakery-800);
+  }
+
+  .btn-primary:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-cream-50), 0 0 0 4px var(--color-bakery-500);
+  }
+
+  .btn-secondary {
+    background-color: white;
+    color: var(--color-bakery-700);
+    border: 1px solid var(--color-bakery-200);
+    box-shadow: var(--shadow-card);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-bakery-50);
+  }
+
+  .btn-secondary:active {
+    background-color: var(--color-bakery-100);
+  }
+
+  .btn-secondary:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-cream-50), 0 0 0 4px var(--color-bakery-500);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-bakery-600);
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-bakery-100);
+  }
+
+  .btn-ghost:active {
+    background-color: var(--color-bakery-200);
+  }
+
+  .btn-ghost:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-cream-50), 0 0 0 4px var(--color-bakery-500);
+  }
+
+  .btn-danger {
+    background-color: #dc2626;
+    color: white;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .btn-danger:hover {
+    background-color: #b91c1c;
+  }
+
+  .btn-danger:active {
+    background-color: #991b1b;
+  }
+
+  .btn-danger:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-cream-50), 0 0 0 4px #dc2626;
+  }
+
+  .input {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-bakery-200);
+    background-color: white;
+    color: var(--color-bakery-900);
+    font-size: 0.875rem;
+    transition: all 0.15s;
+  }
+
+  .input::placeholder {
+    color: var(--color-bakery-400);
+  }
+
+  .input:focus {
+    border-color: var(--color-bakery-500);
+    box-shadow: 0 0 0 1px var(--color-bakery-500);
+    outline: none;
+  }
+
+  .label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-bakery-700);
+    margin-bottom: 0.375rem;
+  }
+
+  .card {
+    background-color: white;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-bakery-100);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .card-header {
+    padding: 1.25rem 1.25rem;
+    border-bottom: 1px solid var(--color-bakery-100);
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .card-footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--color-bakery-100);
+    background-color: var(--color-bakery-50);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .badge-success {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+
+  .badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  .badge-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+
+  .badge-info {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+
+  .badge-neutral {
+    background-color: var(--color-bakery-100);
+    color: var(--color-bakery-700);
+  }
+
+  .stat-card {
+    background-color: white;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-bakery-100);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+    padding: 1.25rem;
+  }
+
+  .stat-value {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--color-bakery-900);
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: var(--color-bakery-500);
+    font-weight: 500;
+  }
+
+  .stat-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  .trend-up {
+    color: #16a34a;
+  }
+
+  .trend-down {
+    color: #dc2626;
+  }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-bakery-600);
+    transition: all 0.15s;
+  }
+
+  .sidebar-link:hover {
+    background-color: var(--color-bakery-100);
+    color: var(--color-bakery-900);
+  }
+
+  .sidebar-link-active {
+    background-color: var(--color-bakery-100);
+    color: var(--color-bakery-900);
+    font-weight: 600;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-bakery-100);
+  }
+
+  .table {
+    width: 100%;
+    font-size: 0.875rem;
+    text-align: left;
+  }
+
+  .table th {
+    padding: 0.75rem 1rem;
+    background-color: var(--color-bakery-50);
+    color: var(--color-bakery-500);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+    border-bottom: 1px solid var(--color-bakery-100);
+  }
+
+  .table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-bakery-100);
+    color: var(--color-bakery-700);
+  }
+
+  .table tbody tr {
+    transition: background-color 0.1s;
+  }
+
+  .table tbody tr:hover {
+    background-color: var(--color-bakery-50);
+  }
+
+  .table tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
