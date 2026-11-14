@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Bell,
   Sun,
@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { cn, formatTime } from '../../utils/helpers';
 import { Button } from '../ui/Button';
+import { useAuth } from '../../hooks/useAuth';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -27,13 +28,9 @@ const NOTIFICATIONS = [
   { id: '3', title: 'Nuevo pedido cliente', message: 'María González - Tarta de Santiago', time: 'Hace 1 hora', type: 'info', read: true },
 ];
 
-const USER_MENU_ITEMS = [
-  { label: 'Mi perfil', icon: User, href: '/profile' },
-  { label: 'Configuración', icon: null, href: '/settings' },
-  { label: 'Cerrar sesión', icon: LogOut, action: 'logout', danger: true },
-];
-
 export function Header({ onMenuClick, isMobile = false }: HeaderProps) {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -55,8 +52,9 @@ export function Header({ onMenuClick, isMobile = false }: HeaderProps) {
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 
-  const handleLogout = () => {
-    console.log('Logout clicked');
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/login');
     setUserMenuOpen(false);
   };
 
@@ -75,6 +73,10 @@ export function Header({ onMenuClick, isMobile = false }: HeaderProps) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const userName = user?.name ?? 'Usuario';
+  const userEmail = user?.email ?? 'email@ejemplo.com';
+  const userRole = user?.role ?? 'vendedor';
 
   return (
     <header
@@ -239,26 +241,28 @@ export function Header({ onMenuClick, isMobile = false }: HeaderProps) {
             {userMenuOpen && (
               <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl border border-bakery-100 shadow-elevated animate-slide-down z-50">
                 <div className="p-3 border-b border-bakery-100">
-                  <p className="text-sm font-medium text-bakery-900">Panadero Demo</p>
-                  <p className="text-xs text-bakery-500">admin@panaderiacontrol.com</p>
+                  <p className="text-sm font-medium text-bakery-900">{userName}</p>
+                  <p className="text-xs text-bakery-500">{userEmail}</p>
+                  <span className="inline-block mt-1 px-2 py-0.5 text-xs font-medium bg-bakery-100 text-bakery-700 rounded-full capitalize">
+                    {userRole}
+                  </span>
                 </div>
                 <nav className="py-2">
-                  {USER_MENU_ITEMS.map((item) => (
-                    <button
-                      key={item.label}
-                      className={cn(
-                        'w-full flex items-center gap-3 px-3 py-2 text-sm text-bakery-700 hover:bg-bakery-50 transition-colors',
-                        item.danger && 'text-red-600 hover:bg-red-50'
-                      )}
-                      onClick={() => {
-                        if (item.action === 'logout') handleLogout();
-                        setUserMenuOpen(false);
-                      }}
-                    >
-                      {item.icon && <item.icon className="w-4 h-4" />}
-                      <span>{item.label}</span>
-                    </button>
-                  ))}
+                  <Link
+                    to="/settings"
+                    className="flex items-center gap-3 px-3 py-2 text-sm text-bakery-700 hover:bg-bakery-50 transition-colors"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    <User className="w-4 h-4" />
+                    <span>Configuración</span>
+                  </Link>
+                  <button
+                    className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Cerrar sesión</span>
+                  </button>
                 </nav>
               </div>
             )}
